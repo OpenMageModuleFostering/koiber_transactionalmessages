@@ -478,8 +478,8 @@ class Mage_Core_Model_Email_Template extends Mage_Core_Model_Email_Template_Abst
     {	
         $this->setSentSuccess(false);
 		$orig_email = $email;
-		$rest = file_get_contents('teste_trans.txt') ;
-		file_put_contents('teste_trans.txt', $rest. print_r($email,true));
+		//$rest = file_get_contents('teste_trans.txt') ;
+		//file_put_contents('teste_trans.txt', $rest. print_r($email,true));
 		$koiberConfig = Mage::getStoreConfig('koiber_options/koiber_configs');
 		
 		if ($koiberConfig['koiber_status']) {
@@ -591,9 +591,11 @@ class Mage_Core_Model_Email_Template extends Mage_Core_Model_Email_Template_Abst
 										'koiber_last_message_id' => $response['message_id'],
 										'koiber_last_message_id_status' => 'talk.created',
 										'canal' => $koiberData->getCanal(),
+										'canal_nome' => $koiberData->getCanalNome(),
 										'template' => $koiberData->getEvento(),
 										'tipo' => $koiberData->getTipo(),
-										'email' => $email
+										'email' => $email,
+                                        'title' => $email_assunto
 									));
 									
 									$model->save();
@@ -607,9 +609,11 @@ class Mage_Core_Model_Email_Template extends Mage_Core_Model_Email_Template_Abst
 										'koiber_last_message_id' => $response['message_id'],
 										'koiber_last_message_id_status' => 'talk.created',
 										'canal' => $koiberData->getCanal(),
+                                        'canal_nome' => $koiberData->getCanalNome(),
 										'template' => $koiberData->getEvento(),
 										'tipo' => $koiberData->getTipo(),
-										'email' => $email
+										'email' => $email,
+                                        'title' => $email_assunto
 									));
 									
 									$model->save();

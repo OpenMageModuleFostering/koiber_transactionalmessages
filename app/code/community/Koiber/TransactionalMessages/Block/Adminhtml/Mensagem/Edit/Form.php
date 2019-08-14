@@ -25,53 +25,39 @@ class Koiber_TransactionalMessages_Block_Adminhtml_Mensagem_Edit_Form extends Ma
 		
 		foreach ($defaultTemplates as $code => $defaultTemplate) {
 			if ($code == $model->getTemplate()) {
-				$template = $defaultTemplate['label'];
+				$template = __($defaultTemplate['label']);
 				
 				break;
 			} else {
 				$template = "";
 			}				
 		}
+        
+        // inclui link para o PEDIDO
+        if($model->getOrderId()) {
+            $order = Mage::getModel('sales/order')->loadByIncrementId($model->getOrderId());
+            $fieldset->addField('order', 'note', array(
+                'label' => "Pedido", 
+                'text' => "<a href='".Mage::helper('adminhtml')->getUrl("*/sales_order/view", array('order_id'=> $order->getId()))."'>".$model->getOrderId()."</a>"
+            ));
+        }
+        
+		$fieldset->addField('titulo', 'note', array(
+            'label' => $this->__('Título'), 
+			'text' => $model->getTitle()
+        ));
 
 		$fieldset->addField('template', 'note', array(
             'label' => $this->__('Template da Mensagem'), 
 			'text' => $template
         ));
-				
-		require_once(Mage::getBaseDir('lib') . '/koiberPHP/src/Koiber/Autoload.php');
-		
-		$koiberConfig = Mage::getStoreConfig('koiber_options/koiber_configs');
-		
-		$koiberApi = new Koiber($koiberConfig['koiber_api']);
-		$response = $koiberApi->getCannels();
-		
-		$canaisKoiber = $response->getBody(true);
-		
-		foreach ($canaisKoiber as $canalKoiber) {			
-			if ($canalKoiber['id'] == $model->getCanal()) {
-				$canal = $canalKoiber['name'];
-				
-				break;
-			} else {
-				$canal = "";
-			}
-		}
-		
+        
+        //$modelEventos = Mage::getModel('koiber_transactionalmessages/eventos')->load($model->getCanal(), 'canal')->getData();
         $fieldset->addField('canal', 'note', array(
-            'label' => $this->__('Canal'), 
-			'text' => $canal
+            'label' => $this->__('Canal koiber'), 
+			'text' => $model->getCanalNome() ? $model->getCanalNome() : $this->__('Canal não localizado')
+			//'text' => (isset($modelEventos) && array_key_exists('canal_nome', $modelEventos)) ? $modelEventos['canal_nome'] : $this->__('Canal não localizado')
         ));
-		
-		/*$texto_tipo = array(
-			'text' => __('Texto'),
-			'form' =>  __('Formulário'),
-			'form_resp' =>  __('Resposta de Formulário')
-		);
-		
-		$fieldset->addField('tipo', 'note', array(
-            'label' => $this->__('Tipo de Mensagem'), 
-			'text' => isset($texto_tipo[$model->getTipo()]) ? $texto_tipo[$model->getTipo()] : $model->getTipo()
-        ));*/
 		
 		$texto_evento = array(
 			'talk.created' => __('Conversa Criada'),
@@ -115,7 +101,7 @@ class Koiber_TransactionalMessages_Block_Adminhtml_Mensagem_Edit_Form extends Ma
 					switch ($element->element) {
 						case 'p': $message_html .= '<p>' . $element->content . '</p>'; break;
 						case 'input': 
-							$message_html .= '<p>' . $element->label . ' <input type="' . $element->type . '" name="' . $element->id . '" value="' . $element->response . '" disabled="disabled"></p>';
+							$message_html .= '<p>' . $element->label . '</p><p> <input type="' . $element->type . '" name="' . $element->id . '" value="' . $element->response . '" disabled="disabled"></p>';
 						break;
 					}
 				}
@@ -137,7 +123,7 @@ class Koiber_TransactionalMessages_Block_Adminhtml_Mensagem_Edit_Form extends Ma
 			} else {
 				$message['content'] = nl2br(strip_tags($message['content']));
 			}
-			
+			$message['content'] .="<br /><br />";
 			$trajeto = (($i == 1) || ($message['author'] == 'company')) ? __('enviado') : __('recebido');
 			
 			$fieldset->addField('mensagem' . $mensagem->getId(), 'note', array(

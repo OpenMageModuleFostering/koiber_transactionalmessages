@@ -15,44 +15,22 @@ class Koiber_TransactionalMessages_Block_Adminhtml_Historico_Renderer_Template e
 				$value = isset($texto[$value]) ? $texto[$value] : $value;
 			break;
 			case 'canal':
-				require_once(Mage::getBaseDir('lib') . '/koiberPHP/src/Koiber/Autoload.php');
-		
-				$koiberConfig = Mage::getStoreConfig('koiber_options/koiber_configs');
-		
-				$koiberApi = new Koiber($koiberConfig['koiber_api']);
-				$response = $koiberApi->getCannels();
-		
-				$canaisKoiber = $response->getBody(true);
-		
-				foreach ($canaisKoiber as $canalKoiber) {			
-					if ($canalKoiber['id'] == $value) {
-						$value = $canalKoiber['name'];
-						
-						break;
-					}
-				}
+                //$modelEventos = Mage::getModel('koiber_transactionalmessages/eventos')->load($value, 'canal')->getData();
+                //$value = (isset($modelEventos) && array_key_exists('canal_nome', $modelEventos)) ? $modelEventos['canal_nome'] : __('Canal não localizado');
+                $value = $value ? $value : __('Canal não localizado');
 			break;
 			case 'cliente':				
 				$customer = Mage::getModel('customer/customer')->setWebsiteId(1)->loadByEmail($value)->getData();
-				
 				$value = $customer ? $customer['firstname'] . ' ' . $customer['lastname'] : $value;
 			break;
 			case 'data':
 				$value = date('d/m/Y H:i:s', strtotime($value));
 			break;
 			case 'titulo':
-				require_once(Mage::getBaseDir('lib') . '/koiberPHP/src/Koiber/Autoload.php');
-		
-				$koiberConfig = Mage::getStoreConfig('koiber_options/koiber_configs');
-		
-				$koiberApi = new Koiber($koiberConfig['koiber_api']);
-				$response = $koiberApi->getTalk($value);		
-				$response = $response->getBody(true);
-				
-				$historico = Mage::getModel('koiber_transactionalmessages/historico')->load($response['id'], 'koiber_parent_talk_id');
+				$historico = Mage::getModel('koiber_transactionalmessages/historico')->load($value, 'koiber_parent_talk_id');
 				$mensagem = Mage::getModel('koiber_transactionalmessages/mensagem')->getCollection()->addFieldToFilter('historico_id', array('eq' => $historico->getId()))->count();
-				
-				$value = $response['title'] . ' (' . ($mensagem) . ')';
+				$value = $historico->getTitle() . ' (' . ($mensagem) . ')';
+                //$value = $value . ' (' . ($mensagem) . ')';
 			break;
 		}
 		

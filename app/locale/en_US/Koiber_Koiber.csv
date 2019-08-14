@@ -45,3 +45,7 @@
 "Para gerar o TOKEN você terá que ter cadastro no site www.koiber.com (cadastro gratuito) e acessar o Painel -> Integração -> API","To generate your TOKEN you will need to register at www.koiber.com (registration is free) and access Painel -> Integração -> API"
 "Para habilitar as notificações para fins de comunicação do Koiber com o Magento, cadastre a seguinte url no Koiber","To activate notifications, for communication purposes from Koiber to Magento, register the following url"
 "Para saber mais acesse o site www.koiber.com","To know more access www.koiber.com"
+"Canal não localizado","Channel not found"
+"Canal koiber","Koiber Channel"
+"-- Selecione um canal --","-- Select a channel --"
+"-- Selecione uma template --","-- Select a template --"

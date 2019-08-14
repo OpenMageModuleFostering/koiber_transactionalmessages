@@ -84,7 +84,6 @@ class Koiber_TransactionalMessages_KoiberController extends Mage_Adminhtml_Contr
 		$this->_title($model->getId() ? $model->getName() : $this->__('Nova Mensagem'));
 		
 		$data = Mage::getSingleton('adminhtml/session')->getEventosData(true);
-		
 		if (!empty($data)) {
 			$model->setData($data);
 		}

@@ -49,6 +49,7 @@ class Koiber_TransactionalMessages_Block_Adminhtml_Historico_Grid extends Mage_A
 			)
 		);
 		
+        /*
 		$this->addColumn('status',
 			array(
 				'header' => $this->__('Nome do Evento'),
@@ -56,13 +57,13 @@ class Koiber_TransactionalMessages_Block_Adminhtml_Historico_Grid extends Mage_A
 				'index' => 'koiber_last_message_id_status',
 				'renderer' => 'Koiber_TransactionalMessages_Block_Adminhtml_Historico_Renderer_Template'
 			)
-		);
+		);*/
 		
 		$this->addColumn('canal',
 			array(
-				'header' => $this->__('Canal'),
+				'header' => $this->__('Canal koiber'),
 				'align' => 'left',
-				'index' => 'canal',
+				'index' => 'canal_nome',
 				'renderer' => 'Koiber_TransactionalMessages_Block_Adminhtml_Historico_Renderer_Template'
 			)
 		);

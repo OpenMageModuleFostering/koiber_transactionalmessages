@@ -105,10 +105,10 @@ class Koiber_TransactionalMessages_IndexController extends Mage_Core_Controller_
 			$templateData['text'] = trim($koiberDefault->getMensagem(), "\n");
 			$templateData['subject'] = trim($koiberDefault->getAssunto(), "\n");
 		} else {
-			$localeCode = Mage::getStoreConfig('general/locale/code', $storeId);
-		
-			$templateData['text'] = trim(Mage::getModel('core/email_template')->loadDefault($template_code, $localeCode)->getTemplateText(), "\n");
-			$templateData['subject'] = trim(Mage::getModel('core/email_template')->loadDefault($template_code, $localeCode)->getTemplateSubject(), "\n");
+            return array();// Eu (natanael), incluir essa linha pois a variavel $storeId não existe e gera um erro
+			//$localeCode = Mage::getStoreConfig('general/locale/code', $storeId);
+			//$templateData['text'] = trim(Mage::getModel('core/email_template')->loadDefault($template_code, $localeCode)->getTemplateText(), "\n");
+			//$templateData['subject'] = trim(Mage::getModel('core/email_template')->loadDefault($template_code, $localeCode)->getTemplateSubject(), "\n");
 		}
 		
 		$this->getResponse()->setBody(Zend_Json::encode($templateData));

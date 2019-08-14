@@ -43,7 +43,7 @@ class Koiber_TransactionalMessages_Block_Adminhtml_Eventos_Edit_Form extends Mag
 		$eventoOptions = array(
 			1 => array(
 				'value' => 0,
-				'label' => '-- Selecione uma template --'
+				'label' => $this->__('-- Selecione uma template --')
 			)
 		);
 
@@ -88,25 +88,31 @@ class Koiber_TransactionalMessages_Block_Adminhtml_Eventos_Edit_Form extends Mag
 		$canalOptions = array(
 			1 => array(
 				'value' => 0,
-				'label' => '-- Selecione um canal --'
+				'label' => $this->__('-- Selecione um canal --')
 			)
 		);
-
+        $arrayCanais = array();
 		foreach ($canaisKoiber as $canalKoiber) {			
 			$canalOptions[] = array(
 				'value' => $canalKoiber['id'],
 				'label' => $canalKoiber['name']
 			);
+            $arrayCanais[$canalKoiber['id']] = $canalKoiber['name'];
 		}
 		
 		$fieldset->addField('canal', 'select', array(
 			'name' => 'canal',
 			'class'     => 'required-entry',
-			'label' => $this->__('Selecione o Canal'),
-			'title' => $this->__('Selecione o Canal'),
+			'label' => $this->__('Canal koiber'),
+			'title' => $this->__('Canal koiber'),
 			'required' => true,
 			'values' => $canalOptions,
-			'after_element_html' => Mage::getSingleton('adminhtml/session')->getCanalErro() ? '<br><span style="color:red">' . Mage::getSingleton('adminhtml/session')->getCanalErro() . '</span>' : ''
+			'after_element_html' => Mage::getSingleton('adminhtml/session')->getCanalErro() ? '<br><span style="color:red">' . Mage::getSingleton('adminhtml/session')->getCanalErro() . '</span>' : $this->atualizaNomeCanal(json_encode($arrayCanais)),
+            'onchange' => 'atualizaNomeCanal(this.value);',
+		));
+        
+		$fieldset->addField('canal_nome', 'hidden', array(
+			'name' => 'canal_nome'
 		));
 		
 		$fieldset->addField('status', 'select', array(
@@ -116,8 +122,8 @@ class Koiber_TransactionalMessages_Block_Adminhtml_Eventos_Edit_Form extends Mag
 			'title' => $this->__('Status da Mensagem'),
 			'required' => true,
 			'tabindex' => 1,
-			'values' => array(1 => __('Ativo'), 0 => __('Inativo')),
-			'after_element_html' => '<br><small>' . __('Ativado, na template selecionada, será enviado esta menssagem para o koiber ao invez do e-mail (apenas se o usuário tiver cadastro no koiber).') . '</small>'
+			'values' => array(1 => __('Ativo'), 0 => __('Inativo'))
+			//'after_element_html' => '<br><small>' . __('Ativado, na template selecionada, será enviado esta menssagem para o koiber ao invez do e-mail (apenas se o usuário tiver cadastro no koiber).') . '</small>'
 		));
 		
 		$fieldset->addField('tipo', 'select', array(
@@ -144,9 +150,9 @@ class Koiber_TransactionalMessages_Block_Adminhtml_Eventos_Edit_Form extends Mag
 		
 		$fieldset->addField('email', 'textarea', array(
 			'name' => 'email',
-			'label' => $this->__('Template do E-mail'),
-			'title' => $this->__('Template do E-mail'),
-			'after_element_html' => '<br><small>' . __('Caso preenchido, irá trocar a template padrão do e-mail para o conteudo deste campo.') . '</small>'
+			'label' => $this->__('Mensagem'),
+			'title' => $this->__('Mensagem')
+			//'after_element_html' => '<br><small>' . __('Caso preenchido, irá trocar a template padrão do e-mail para o conteudo deste campo.') . '</small>'
 		));
 		
 		Mage::getSingleton('adminhtml/session')->unsEventoErro();
@@ -211,4 +217,19 @@ class Koiber_TransactionalMessages_Block_Adminhtml_Eventos_Edit_Form extends Mag
 		
 		return $js_function;
 	}
+    
+    /**
+     * Atualiza o nome do canal sempre que 
+     */
+    protected function atualizaNomeCanal($canais) {
+		$js_function = "<script type=\"text/javascript\"><!--
+        var canais = ".$canais."
+		function atualizaNomeCanal(nomeCanal) {
+			document.getElementById('canal_nome').setAttribute('value', canais[nomeCanal]);
+		}
+		//--></script>";
+		
+		return $js_function;
+    }
+    
 }
