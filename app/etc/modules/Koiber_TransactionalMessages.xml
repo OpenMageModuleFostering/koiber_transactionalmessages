@@ -1,0 +1,8 @@
+<config>
+    <modules>
+        <Koiber_TransactionalMessages>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Koiber_TransactionalMessages>
+    </modules>
+</config>    

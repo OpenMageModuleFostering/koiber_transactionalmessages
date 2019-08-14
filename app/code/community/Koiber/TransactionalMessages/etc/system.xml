@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <tabs>
+        <koiberconfig translate="label" module="koiber_transactionalmessages">
+            <label>Koiber</label>
+            <sort_order>100</sort_order>
+        </koiberconfig>
+    </tabs>
+	<sections>
+        <koiber_options translate="label" module="koiber_transactionalmessages">
+			<label>Configurações do Koiber</label>
+            <tab>koiberconfig</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>1000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+			<groups>
+                <koiber_configs translate="label">
+                    <label>Dados de Configurações do Koiber</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+					<fields>
+						<koiber_api>
+							<label>TOKEN da API:</label>
+                            <comment>Insira aqui o token api gerado pelo koiber.</comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>                    
+						</koiber_api>
+						<koiber_status translate="label">
+                            <label>Status:</label>
+                            <frontend_type>select</frontend_type>
+							<comment>Status de funcionamento do módulo.</comment>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </koiber_status>
+						<koiber_label translate="label">
+                            <frontend_model>koiber_transactionalmessages/adminhtml_system_config_info</frontend_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </koiber_label>
+					</fields>                
+                </koiber_configs>
+            </groups>
+		</koiber_options>
+	</sections>
+</config>

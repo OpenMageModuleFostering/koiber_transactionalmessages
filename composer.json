@@ -1,0 +1,16 @@
+{
+    "name": "OpenMageModuleFostering/Koiber_TransactionalMessages",
+    "type": "magento-module",
+    "license": "MIT-Licence",
+    "homepage": "",
+    "description": "Módulo desenvolvido com a finaliade de integrar o aplicativo Koiber com o magento",
+    "authors": [
+    {
+        "name": "Koiber",
+        "email": "bsbinfor@gmail.com"
+    }
+],
+    "suggest": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}

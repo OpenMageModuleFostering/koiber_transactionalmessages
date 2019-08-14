@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<layout>
+    <adminhtml_koiber_index>
+        <reference name="content">
+            <block type="koiber_transactionalmessages/adminhtml_eventos" name="koiber_transactionalmessages_eventos" />
+        </reference>
+    </adminhtml_koiber_index>
+    <adminhtml_koiber_historico>
+        <reference name="content">
+            <block type="koiber_transactionalmessages/adminhtml_historico" name="koiber_transactionalmessages_historico" />
+        </reference>
+    </adminhtml_koiber_historico>
+</layout>
