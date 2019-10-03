@@ -1,5 +1,5 @@
 {
-    "name": "OpenMageModuleFostering\/Koiber_TransactionalMessages",
+    "name": "openmage-module-fostering\/koiber_transactionalmessages",
     "type": "magento-module",
     "license": "MIT-Licence",
     "homepage": "",
